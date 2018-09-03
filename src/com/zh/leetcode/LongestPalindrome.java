@@ -1,4 +1,4 @@
-package com.company;
+package com.zh.leetcode;
 
 import java.util.ArrayList;
 import java.util.HashSet;

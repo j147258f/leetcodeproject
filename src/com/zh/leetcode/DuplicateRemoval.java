@@ -1,4 +1,4 @@
-package com.company;
+package com.zh.leetcode;
 
 /**
  * 数组去重

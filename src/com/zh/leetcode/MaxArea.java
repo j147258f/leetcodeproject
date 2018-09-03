@@ -1,4 +1,4 @@
-package com.company;
+package com.zh.leetcode;
 
 public class MaxArea {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.company;
+package com.zh.leetcode;
 
 /**
  * Created by zhanghao on 2018/5/13.
