@@ -7,8 +7,8 @@ import java.util.Arrays;
  */
 public class ThreeSumClosest {
     public static void main(String[] strings) {
-        int[] nums = {-3, -2, -5, 3, -4};
-        System.out.println(threeSumClosest(nums, -1));
+        int[] nums = {1, 2, 4, 8, 16, 32, 64, 128};
+        System.out.println(threeSumClosest(nums, 82));
     }
 
     public static int threeSumClosest(int[] nums, int target) {
@@ -28,31 +28,47 @@ public class ThreeSumClosest {
         }
 
         int left = 0;
-        int right = nums.length;
+        int right = nums.length - 1;
         int mid = 1;
-        boolean flag = false;
         while (true) {
             int dif = difference(nums[left], nums[right], nums[mid], target);
-            if (dif < leastDiff) {
+            if (Math.abs(dif) < leastDiff) {
                 lastSum = nums[left] + nums[right] + nums[mid];
-                leastDiff = dif;
-                flag = true;
+            }else{
+                //若操作导致和target的差值相较上次变大，则需要以最小差值取进行反操作
+
+            }
+            leastDiff = Math.abs(dif);
+            boolean isSumBiggerThanTarget = dif > 0;
+            if (isSumBiggerThanTarget) {
+                //如果三数之和大于target，则最右边的指针忘左边移动
+                if (right - 1 == mid) {
+                    return lastSum;
+                }
+                right--;
             } else {
-                int nextLeftDiff = nums[left + 1] - nums[left];
-                int nextRightDiff = nums[right + 1] - nums[right];
-                int nextMidLeftDiff = nums[mid + 1] - nums[mid];
-                int nextMidRightDiff = nums[mid - 1] - nums[mid];
+                int nextMidDiff = Integer.MIN_VALUE;
+                int nextLeftDiff = Integer.MIN_VALUE;
+                if (mid + 1 != right) {
+                    nextMidDiff = nums[mid + 1] - nums[mid];
+                }
+                if (nextLeftDiff == Integer.MIN_VALUE && nextMidDiff == Integer.MIN_VALUE) {
+                    return lastSum;
+                }
+                //否则左边的两个指针以最大差值往右边移动
+               if(nextMidDiff >= nextLeftDiff){
+                   mid++;
+                   if(mid == right)return lastSum;
+               }else {
+                   left++;
+                   if(left == mid) return lastSum;
+               }
             }
         }
     }
 
     private static int difference(int a, int b, int c, int d) {
-        int sum = a + b + c - d;
-        if (sum < 0) {
-            return -sum;
-        } else {
-            return sum;
-        }
+        return a + b + c - d;
     }
 
     private static int maxSum(int[] nums) {
@@ -60,6 +76,6 @@ public class ThreeSumClosest {
     }
 
     private static int minSum(int[] nums) {
-        return nums[0] + nums[12] + nums[2];
+        return nums[0] + nums[1] + nums[2];
     }
 }
