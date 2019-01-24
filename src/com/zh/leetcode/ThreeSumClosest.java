@@ -27,48 +27,67 @@ public class ThreeSumClosest {
             return min;
         }
 
-        int left = 0;
-        int right = nums.length - 1;
-        int mid = 1;
+        Integer left = 0;
+        Integer right = 2;
+        Integer mid = 1;
+        int lastChangeIndex = -1;
         while (true) {
-            int dif = difference(nums[left], nums[right], nums[mid], target);
-            if (Math.abs(dif) < leastDiff) {
-                lastSum = nums[left] + nums[right] + nums[mid];
-            }else{
-                //若操作导致和target的差值相较上次变大，则需要以最小差值取进行反操作
 
+            int temp_sum = nums[left] + nums[right] + nums[mid];
+            int dif = temp_sum - target;
+            if (Math.abs(dif) < leastDiff) {
+                lastSum = temp_sum;
+            } else {
+                switch (lastChangeIndex){
+                    case  0:{
+                        break;
+                    }
+                    case 1:{
+                        break;
+                    }
+                    case 2:{
+                        break;
+                    }
+                }
+                return lastSum;
             }
             leastDiff = Math.abs(dif);
-            boolean isSumBiggerThanTarget = dif > 0;
-            if (isSumBiggerThanTarget) {
-                //如果三数之和大于target，则最右边的指针忘左边移动
-                if (right - 1 == mid) {
-                    return lastSum;
-                }
-                right--;
-            } else {
-                int nextMidDiff = Integer.MIN_VALUE;
-                int nextLeftDiff = Integer.MIN_VALUE;
-                if (mid + 1 != right) {
-                    nextMidDiff = nums[mid + 1] - nums[mid];
-                }
-                if (nextLeftDiff == Integer.MIN_VALUE && nextMidDiff == Integer.MIN_VALUE) {
-                    return lastSum;
-                }
-                //否则左边的两个指针以最大差值往右边移动
-               if(nextMidDiff >= nextLeftDiff){
-                   mid++;
-                   if(mid == right)return lastSum;
-               }else {
-                   left++;
-                   if(left == mid) return lastSum;
-               }
+
+            int nextMidDiff = Integer.MIN_VALUE;
+            int nextLeftDiff = Integer.MIN_VALUE;
+            int nextRightDiff = Integer.MIN_VALUE;
+            if (mid + 1 != right) {
+                nextMidDiff = nums[mid + 1] - nums[mid];
+            }
+            if (left + 1 != mid) {
+                nextLeftDiff = nums[left + 1] - nums[left];
+            }
+            if (right + 1 != nums.length) {
+                nextRightDiff = nums[right + 1] - nums[right];
+            }
+            int minInDiff = findMax(nextMidDiff, nextLeftDiff, nextRightDiff);
+            if (minInDiff == Integer.MIN_VALUE) {
+                return lastSum;
+            }
+            if (minInDiff == nextLeftDiff) {
+                left++;
+            } else if (minInDiff == nextMidDiff) {
+                mid++;
+            } else if (minInDiff == nextRightDiff) {
+                right++;
             }
         }
     }
 
-    private static int difference(int a, int b, int c, int d) {
-        return a + b + c - d;
+    private static int findMax(int a, int b, int c) {
+        int max = a;
+        if (b > a) {
+            max = b;
+        }
+        if (c > max) {
+            max = c;
+        }
+        return max;
     }
 
     private static int maxSum(int[] nums) {
