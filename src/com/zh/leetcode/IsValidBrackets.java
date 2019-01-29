@@ -15,38 +15,75 @@ import java.util.ArrayList;
  */
 public class IsValidBrackets {
     public static void main(String[] str) {
-        ArrayList<String> s=new ArrayList();
-        s.remove(0);
-        System.out.println(isValid("()"));
+        System.out.println(isValid("([]"));
     }
 
+    //栈
     public static boolean isValid(String s) {
-        int left = 0;
-        int right = s.length() - 1;
         char[] chars = s.toCharArray();
-
-        while (chars[0] != ' ') {
-            //寻找第一个)]}
-            for (int i = 0; i < s.length() - 1; i++) {
-                int j = i + 1;
-                if (chars[i] == '(' && chars[j] == ')') {
-                    char[] charsTemp1 = new char[s.length()];
-                    char[] charsTemp2 = new char[s.length()];
-                    System.arraycopy(chars, 0, charsTemp1, 0, i);
-                    System.arraycopy(chars, j, charsTemp1, 0, s.length() - j);
-
-
-                    break;
+        int[] stack = new int[chars.length];
+        int stackIndex = 0;
+        for (int i = 0; i < chars.length; i++) {
+            if (stackIndex == 0) {
+                stack[stackIndex] = chars[i];
+                stackIndex++;
+            }else{
+                boolean isLittle = stack[stackIndex-1]=='(' && chars[i]==')';
+                boolean isMid=stack[stackIndex-1]=='[' && chars[i]==']';
+                boolean isBig=stack[stackIndex-1]=='{' && chars[i]=='}';
+                if(isLittle||isMid||isBig){
+                    stackIndex--;
+                }else{
+                    stack[stackIndex] = chars[i];
+                    stackIndex++;
                 }
             }
         }
+        if(stackIndex!=0)return false;
         return true;
     }
 
-    private static void remove(char[] chars,int size,int index){
-        int numMoved = size - index - 1;
-        if (numMoved > 0)
-            System.arraycopy(chars, index+2, chars, index+1,
-                    numMoved);
+
+    //用消除法，也可以用链表，可能会增加效率
+    public static boolean isValid_2(String s) {
+        char[] chars = s.toCharArray();
+        int size = chars.length;
+
+        jump:
+        while (size > 0) {
+            //寻找第一个)]}
+            if (size == 1) return false;
+            for (int i = 0; i < size - 1; i++) {
+                int j = i + 1;
+                boolean little = chars[i] == '(' && chars[j] == ')';
+                boolean mid = chars[i] == '[' && chars[j] == ']';
+                boolean big = chars[i] == '{' && chars[j] == '}';
+                if (little || mid || big) {
+
+                    int numMoved = size - i - 2;
+                    if (numMoved > 0) {
+                        System.arraycopy(chars, i + 2, chars, i,
+                                numMoved);
+                        size = size - 2;
+                        break;
+                    } else if (numMoved == 0) {
+                        //如果移动的是最后两位，则判断size-2后的值
+                        size = size - 2;
+                        if (size == 0) return true;
+                        else return false;
+                    } else {
+                        break jump;
+                    }
+                }
+                if (i == size - 2) {
+                    return false;
+                }
+            }
+
+
+        }
+        if (size != 0) return false;
+        return true;
     }
+
 }
