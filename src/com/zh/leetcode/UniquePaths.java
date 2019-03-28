@@ -8,8 +8,8 @@ import java.util.Stack;
  */
 public class UniquePaths {
     public static void main(String[] strings) {
-        System.out.println(uniquePaths(23, 12));
-        System.out.println(uniquePaths1(23, 12));
+        System.out.println(uniquePaths(5, 8));
+        System.out.println(uniquePaths1(5, 8));
     }
 
     static int remanentDown = -1;
@@ -19,15 +19,19 @@ public class UniquePaths {
     static int pathEmptiedTime = 0;
 
     public static int uniquePaths1(int m, int n) {
-        int[][] dp = new int[n][m];
-        for(int i = 0;i<n;i++){
-            for(int j = 0;j<m;j++){
-                if(i==0 || j==0) dp[i][j] = 1;
-                else
-                    dp[i][j] = dp[i-1][j] + dp[i][j-1];
+        int[][] range = new int[m][n];
+        for(int i =0;i<n;i++){
+            range[0][i]=1;
+        }
+        for (int i=0;i<m;i++){
+            range[i][0]=1;
+        }
+        for(int i =1;i<m;i++){
+            for(int j =1;j<n;j++){
+                range[i][j]=range[i-1][j]+range[i][j-1];
             }
         }
-        return dp[n-1][m-1];
+        return range[m-1][n-1];
     }
 
     /**
