@@ -11,7 +11,8 @@ public class MedianOfTwoSortedArrays {
     }
 
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
-
+        //todo 两个数组各选取一半，若左侧最大值小于右侧最小值，则调整数组
+return 0.0;
     }
 
 

@@ -8,8 +8,8 @@ import java.util.Stack;
  */
 public class UniquePaths {
     public static void main(String[] strings) {
-        System.out.println(uniquePaths(5, 8));
-        System.out.println(uniquePaths1(5, 8));
+        System.out.println(uniquePaths(25, 12));
+//        System.out.println(uniquePaths1(99, 99));
     }
 
     static int remanentDown = -1;
