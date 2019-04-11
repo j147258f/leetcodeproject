@@ -31,15 +31,9 @@ public class UniquePaths2 {
                 if (obstacleGrid[i][j] == 1) {
                     range[i][j] = 0;
                     continue;
+                }else {
+                    range[i][j] = range[i][j - 1] + range[i - 1][j];
                 }
-
-                int up = obstacleGrid[i - 1][j];
-                int left = obstacleGrid[i][j - 1];
-                if (left == 1) left = 0;
-                else left = range[i][j - 1];
-                if (up == 1) up = 0;
-                else up = range[i - 1][j];
-                range[i][j] = left + up;
             }
         }
         return range[obstacleGrid.length - 1][obstacleGrid[0].length - 1];
