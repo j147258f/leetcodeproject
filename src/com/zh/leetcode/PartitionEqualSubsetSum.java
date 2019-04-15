@@ -39,11 +39,11 @@ public class PartitionEqualSubsetSum {
 
     static void FindMax()//动态规划
     {
-        int number=4;
+        int number=7;
         int capacity=8;
-        int[] w={1,2,8,4,5,6,7};
-        int[] v={1,2,113,4,5,6,7};
-        int[][] V = new int[5][9];
+        int[] w={0,1,2,8,4,5,6,7};
+        int[] v={0,1,100,113,4,5,80,7};
+        int[][] V = new int[number+1][capacity+1];
         int i, j;
         //填表
         for (i = 1; i <= number; i++) {
