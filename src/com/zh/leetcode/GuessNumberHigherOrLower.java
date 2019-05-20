@@ -19,6 +19,7 @@ public class GuessNumberHigherOrLower {
                 int min = Integer.MAX_VALUE;
 
                 for (int k = left + 1; k < right; k++) {
+                    //重点就是作为博弈游戏，没方都要选在最坏情况下对自己最有利的选择
                     int max = k + Math.max(collection[left][k - 1], collection[k + 1][right]);
                     min = Math.min(max, min);
                 }
