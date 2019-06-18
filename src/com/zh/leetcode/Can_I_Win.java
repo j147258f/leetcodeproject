@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public class Can_I_Win {
     public static void main(String[] strs) {
-        System.out.println(canIWin(5, 7));
+        System.out.println(canIWin(3, 4));
     }
 
     public static boolean canIWin(int maxChoosableInteger, int desiredTotal) {
