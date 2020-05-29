@@ -62,5 +62,14 @@ public class RotateList {
         }
         return size;
     }
-
 }
+class ListNode{
+    ListNode next;
+    int val;
+
+    public ListNode(int val) {
+        this.val = val;
+    }
+}
+
+
