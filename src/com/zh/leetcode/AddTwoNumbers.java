@@ -9,46 +9,53 @@ public class AddTwoNumbers {
         ListNode l1Next = l1.next;
         ListNode l2Next = l2.next;
 
-        ListNode result = new ListNode(0);
-        ListNode returnresult = result;
+        ListNode node = new ListNode(0);
+        ListNode returnresult = node;
 
-        boolean addOne = false;
-
+        ListNode pre = null;
         int amount = l1.val + l2.val;
         if (amount > 9) {
-            result.val = amount - 10;
-            addOne = true;
+            node.val = amount - 10;
+            ListNode next = new ListNode(1);
+            node.next = next;
+            pre = node;
+            node = next;
         } else {
-            result.val = amount;
+            node.val = amount;
+            ListNode next = new ListNode(0);
+            node.next = next;
+            pre = node;
+            node = next;
         }
 
         while (l1Next != null || l2Next != null) {
-            if (l1Next == null && l2Next == null) {
-                break;
-            } else if (l1Next == null) {
+            if (l1Next == null) {
                 l1Next = new ListNode(0);
             } else if(l2Next == null){
                 l2Next = new ListNode(0);
             }
 
-
-            amount = l1Next.val + l2Next.val;
-            if (addOne) {
-                amount += 1;
-            }
-            ListNode resultNext = new ListNode(0);
+            amount = l1Next.val + l2Next.val+node.val;
             if (amount > 9) {
-                resultNext.val = amount - 10;
-                addOne = true;
+                node.val = amount%10;
+                ListNode next = new ListNode(amount/10);
+                node.next = next;
+                pre = node;
+                node = next;
             } else {
-                resultNext.val = amount;
-                addOne = false;
+                node.val = amount;
+                ListNode next = new ListNode(0);
+                node.next = next;
+                pre = node;
+                node = next;
             }
-            result.next = resultNext;
-            result = resultNext;
 
             l1Next = l1Next.next;
             l2Next = l2Next.next;
+        }
+
+        if(node.val==0){
+            pre.next=null;
         }
 
         return returnresult;
