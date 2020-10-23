@@ -9,7 +9,7 @@ public class UniquePaths {
     public static void main(String[] strings) {
         System.out.println(solu(51, 9));
         System.out.println(uniquePaths1(51, 9));
-//        System.out.println(uniquePaths1(99, 99));
+        System.out.println(uniquePaths(51, 9));
     }
 
     static int remanentDown = -1;
