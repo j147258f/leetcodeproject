@@ -15,6 +15,40 @@ public class ThreeSumClosest {
     }
 
     public static int threeSumClosest(int[] nums, int target) {
+        if (nums.length == 3) return nums[0] + nums[1] + nums[2];
+        int result = 0;
+        Arrays.sort(nums);
+        int cloest = Integer.MAX_VALUE;
+        for (int i = 1; i < nums.length; i++) {
+            int left = 0;
+            int right = nums.length - 1;
+            while (left < i && right > i) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum > target) {
+                    int abs_c = sum - target;
+                    if (abs_c < cloest) {
+                        cloest = abs_c;
+                        result= sum;
+                    }
+                    right--;
+                } else if (sum < target) {
+                    int abs_c = target - sum;
+                    if (abs_c < cloest) {
+                        cloest = abs_c;
+                        result= sum;
+                    }
+                    left++;
+                } else {
+                    return sum;
+                }
+            }
+        }
+        return result;
+    }
+
+
+    //两年前旧代码 作废
+    public static int threeSumClosest2(int[] nums, int target) {
         //排序
         //依次计算和target的差
         //若第n次差的绝对值为m，第n+1次差为x，且x>m 则终止循环，返回m为答案
