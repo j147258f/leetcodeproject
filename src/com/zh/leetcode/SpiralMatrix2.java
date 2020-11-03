@@ -1,8 +1,5 @@
 package com.zh.leetcode;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class SpiralMatrix2 {
     public int[][] generateMatrix(int n) {
         result = new int[n][n];
