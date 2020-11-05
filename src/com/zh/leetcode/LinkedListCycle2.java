@@ -1,5 +1,8 @@
 package com.zh.leetcode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 142 给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
  * <p>
@@ -8,11 +11,11 @@ package com.zh.leetcode;
  * 说明：不允许修改给定的链表。
  */
 public class LinkedListCycle2 {
-    public static void main(String[] args){
-        ListNode l  = new ListNode(3);
-        ListNode l2  = new ListNode(2);
-        ListNode l0  = new ListNode(0);
-        ListNode l4  = new ListNode(-4);
+    public static void main(String[] args) {
+        ListNode l = new ListNode(3);
+        ListNode l2 = new ListNode(2);
+        ListNode l0 = new ListNode(0);
+        ListNode l4 = new ListNode(-4);
 
         l.next = l2;
         l2.next = l0;
@@ -23,17 +26,39 @@ public class LinkedListCycle2 {
     }
 
     public static ListNode detectCycle(ListNode head) {
-        if (head == null) return null;
+        Map<ListNode, Integer> m = new HashMap<>();
+
+        ListNode temp = head;
+        while (temp!=null) {
+            Integer n = m.get(temp);
+            if (n == null) {
+                m.put(temp, 0);
+            } else {
+                if (n == 2) {
+                    return temp;
+                } else {
+                    m.put(temp, ++n);
+                }
+            }
+            temp = temp.next;
+        }
+        return null;
+
+    }
+
+    public static ListNode detectCycle_t(ListNode head) {
+        if (head == null || head.next == null) return null;
         ListNode slow = head;
-        ListNode fast = head.next;
+        ListNode fast = head;
         boolean isCycle = false;
         while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
             if (slow == fast) {
                 isCycle = true;
                 break;
             }
-            slow = slow.next;
-            fast = fast.next.next;
+
         }
         if (isCycle) {
             fast = head;
@@ -41,7 +66,7 @@ public class LinkedListCycle2 {
                 fast = fast.next;
                 slow = slow.next;
             }
-            return slow;
+            return fast;
         }
         return null;
     }
