@@ -1,6 +1,7 @@
 package com.zh.leetcode;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class KthLargestElementinanArray {
 
@@ -14,6 +15,9 @@ public class KthLargestElementinanArray {
     public int findKthLargest(int[] nums, int k) {
         return findKthLargest_fast2(nums, nums.length - k, 0, nums.length - 1);
     }
+
+
+    private static Random random = new Random(System.currentTimeMillis());
 
     //分治算法  在原数组上进行排序  25% 还是慢
     public int findKthLargest_fast2(int[] nums, int k, int start, int end) {
@@ -29,6 +33,8 @@ public class KthLargestElementinanArray {
     }
 
     public int partition(int[] nums, int left, int right) {
+        int index = left + random.nextInt(right - left);
+        swap(nums,left,index);
         int pivot = nums[left];
         int l = left;
         int r = right;
