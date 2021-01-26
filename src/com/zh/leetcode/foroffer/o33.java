@@ -1,29 +1,29 @@
 package com.zh.leetcode.foroffer;
 
 public class o33 {
-    public static void main(String[] agrs){
+    public static void main(String[] agrs) {
         new o33().verifyPostorder(new int[]{1,2,5,10,6,9,4,3});
     }
 
     public boolean verifyPostorder(int[] postorder) {
-        return verifyPostorder(postorder,0,postorder.length-1);
+        this.postorder = postorder;
+        return verifyPostorder(0, postorder.length - 1);
     }
 
-    public boolean verifyPostorder(int[] postorder, int left, int right) {
+
+    int[] postorder;
+
+    public boolean verifyPostorder(int left, int right) {
         if (left >= right) return true;
 
         int root = postorder[right];
-
-        int index = left;
-
-        while (postorder[index] < root) {
-            index++;
+        int mid = left;
+        while (postorder[mid] < root) {
+            mid++;
         }
-
-        for (int i = index; i < right; i++) {
+        for (int i = mid; i < right; i++) {
             if (postorder[i] < root) return false;
         }
-
-        return verifyPostorder(postorder,left,index-1)&&verifyPostorder(postorder,index,right-1);
+        return verifyPostorder(left, mid - 1) && verifyPostorder(mid, right - 1);
     }
 }
