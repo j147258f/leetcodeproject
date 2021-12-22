@@ -16,6 +16,34 @@ public class ThreeSumClosest {
 
     public static int threeSumClosest(int[] nums, int target) {
         if (nums.length == 3) return nums[0] + nums[1] + nums[2];
+        int result = nums[0] + nums[1] + nums[2];
+        Arrays.sort(nums);
+        for (int i = 0; i <= nums.length - 3; i++) {
+            int newTarget = target - nums[i];
+            int left = i + 1;
+            int right = nums.length - 1;
+            while (left < right) {
+                int sum = nums[left] + nums[right];
+                int sum2 = sum + nums[i];
+                if (Math.abs(sum2 - target) < Math.abs(result - target)) {
+                    result = sum2;
+                }
+                if (sum > newTarget) {
+                    right--;
+                } else if (sum < newTarget) {
+                    left++;
+                } else {
+                    return target;
+                }
+            }
+        }
+        return result;
+
+    }
+
+    //一年前旧代码 作废
+    public static int threeSumClosest_1year(int[] nums, int target) {
+        if (nums.length == 3) return nums[0] + nums[1] + nums[2];
         int result = 0;
         Arrays.sort(nums);
         int cloest = Integer.MAX_VALUE;
