@@ -18,16 +18,44 @@ public class Permutations {
         });
     }
 
-
-
     public static List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        addToList(result, nums, 0, nums.length - 1);
+        return result;
+    }
+
+    public static void addToList(List<List<Integer>> result, int[] nums, int left, int right) {
+        if (left == right) {
+            List<Integer> l = new ArrayList<>();
+            for (int num : nums) {
+                l.add(num);
+            }
+            result.add(l);
+            return;
+        }
+        for (int i = left; i < nums.length; i++) {
+            swap(nums,i,left);
+            addToList(result,nums,left+1,right);
+            swap(nums,i,left);
+        }
+
+    }
+
+    private static void swap(int[] nums, int a, int b) {
+        int t = nums[a];
+        nums[a] = nums[b];
+        nums[b] = t;
+    }
+
+
+    public static List<List<Integer>> permute_old(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> usedIndex = new LinkedList<>();
         List<Integer> tempList = new LinkedList<>();
-        for(int i = 0;i<nums.length;i++){
+        for (int i = 0; i < nums.length; i++) {
             usedIndex.add(i);
             tempList.add(nums[i]);
-            process(result, tempList, nums, usedIndex,1);
+            process(result, tempList, nums, usedIndex, 1);
             tempList.clear();
             usedIndex.clear();
         }
@@ -79,12 +107,6 @@ public class Permutations {
             fullSort(result,arr, start + 1, end);
             swap(arr, i, start);
         }
-    }
-
-    private static void swap(int[] arr, int i, int j) {
-        int tmp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = tmp;
     }
 
 }
