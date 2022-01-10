@@ -4,7 +4,7 @@ package com.zh.leetcode;
 public class SlidingWindowMaximum {
     public static void main(String[] args) {
         SlidingWindowMaximum s = new SlidingWindowMaximum();
-        s.maxSlidingWindow(new int[]{1,3,1,2,0,5}, 3);
+        s.maxSlidingWindow(new int[]{1,-1}, 1);
     }
 
     ListNode head = new ListNode(0);
@@ -37,8 +37,7 @@ public class SlidingWindowMaximum {
     }
 
     private int build(int[] nums, int left, int right) {
-        int max = nums[left];
-        ListNode node = new ListNode(max);
+        ListNode node = new ListNode(nums[left]);
         head.next = node;
         node.pre = head;
         tail = node;
@@ -57,21 +56,26 @@ public class SlidingWindowMaximum {
 
     private void addToListNode(int num) {
         ListNode node = new ListNode(num);
+        if(num>tail.val||head.next==null){
+            //处理num最大的情况
+            head.next = node;
+            node.pre = head;
+            tail = node;
+            return;
+        }
+
         ListNode current = head.next;
         while (current != null) {
-            if (current.val > num) {
-                current.pre.next = node;
-                node.pre = current.pre;
+            if (current.val >= num) {
+                head.next = node;
+                node.pre = head;
                 node.next = current;
                 current.pre = node;
                 return;
             }
             current = current.next;
         }
-        //处理num最大的情况
-        head.next = node;
-        node.pre = head;
-        tail = node;
+
     }
 
     private static class ListNode {
