@@ -4,6 +4,11 @@ package com.zh.leetcode;
  * 160. 相交链表
  */
 public class IntersectionofTwoLinkedLists {
+
+    public static void main(String[] args){
+
+    }
+
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         if(headA==null||headB==null)return null;
 
